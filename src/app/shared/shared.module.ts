@@ -4,13 +4,15 @@ import { MaterialModule } from './modules/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListComponent } from './components/list/list.component';
 import { TranslatePipe } from './pipes/translate.pipe';
+import { ModalWindowComponent } from './components/modal-window/modal-window.component';
 
 
 
 @NgModule({
   declarations: [
     ListComponent,
-    TranslatePipe
+    TranslatePipe,
+    ModalWindowComponent
   ],
   imports: [
     CommonModule,
