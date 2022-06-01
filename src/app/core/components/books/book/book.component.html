@@ -1,0 +1,64 @@
+<div class="form">
+    <div class="wrapper application-wrapper">
+        <ng-container *ngIf="isViewMode then view; else edit"></ng-container>
+    </div>
+</div>
+
+
+<ng-template #view>
+    <h1>{{ book?.title }}</h1>
+    <div fxLayout='row' fxLayoutAlign="start" fxLayoutGap="1rem"><p>Publish date: {{ book?.publishDate }}</p> <p>Pages: {{ book?.pageCount }}</p></div>
+    <div fxLayout='column'>
+        <h3>Description:</h3>
+        <p>{{ book?.description }}</p>
+        <ng-container *ngIf="book?.excerpt">
+            <h3>Excerpt:</h3>
+            <p>{{ book.excerpt }}</p>
+        </ng-container>
+    </div>
+
+    <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
+        <button mat-raised-button class="cancel button" [routerLink]="''" routerLinkActive="active" (click)="onBack()">
+            Back
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #edit>
+    <div class="card-border">
+        <form [formGroup]="FormGroup" fxLayout='column' fxLayoutAlign='start space-between' class="step">
+            <div fxLayout='row' class="inputs">
+                <div><label class="step-label"> Title <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="text" formControlName="title">
+                    </mat-form-field>
+                </div>
+                <div><label class="step-label"> Description <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="textarea" formControlName="description">
+                    </mat-form-field>
+                </div>
+                <div><label class="step-label"> Page Count <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="text" formControlName="pageCount">
+                    </mat-form-field>
+                </div>
+                <div><label class="step-label"> Publish Date <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="text" formControlName="publishDate">
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    <mat-divider></mat-divider>
+    <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
+        <button mat-raised-button class="btn button" [routerLink]="''" routerLinkActive="active"
+            [disabled]="!(FormGroup.valid)" (click)="onSave()">
+            Save
+        </button>
+        <button mat-raised-button class="cancel button" [routerLink]="''" routerLinkActive="active" (click)="onBack()">
+            Back
+        </button>
+    </div>
+</ng-template>

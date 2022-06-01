@@ -1,0 +1,23 @@
+@import 'src/app/shared/styles/form-wrapper.scss';
+
+.card-border {
+    margin: 32px 6px;
+}
+.btn-section {
+    margin-bottom: 32px;
+}
+.btn-footer {
+    margin: 16px 0;
+}
+form .inputs {
+    margin-bottom: 32px;
+}
+.info-message {
+    font-size: 0.75em;
+}
+.del-button {
+    background-color: #d92344;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
