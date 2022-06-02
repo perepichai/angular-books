@@ -7,7 +7,7 @@
 
 <ng-template #view>
     <h1>{{ book?.title }}</h1>
-    <div fxLayout='row' fxLayoutAlign="start" fxLayoutGap="1rem"><p>Publish date: {{ book?.publishDate }}</p> <p>Pages: {{ book?.pageCount }}</p></div>
+    <div fxLayout='row' fxLayoutAlign="start" fxLayoutGap="1rem"><p>Publish date: {{ book?.publishDate | date }}</p> <p>Pages: {{ book?.pageCount }}</p></div>
     <div fxLayout='column'>
         <h3>Description:</h3>
         <p>{{ book?.description }}</p>
@@ -17,11 +17,11 @@
         </ng-container>
     </div>
 
-    <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
+    <!-- <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
         <button mat-raised-button class="cancel button" [routerLink]="''" routerLinkActive="active" (click)="onBack()">
             Back
         </button>
-    </div>
+    </div> -->
 </ng-template>
 
 <ng-template #edit>

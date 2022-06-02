@@ -6,7 +6,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { TableCarColumns, TableColumnsReverse } from 'src/app/shared/enum/table-columns';
 import { BookEntity } from 'src/app/shared/models/book.model';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalWindowComponent } from '../modal-window/modal-window.component';
+import {MatPaginator} from '@angular/material/paginator';
 import { Store } from '@ngxs/store';
 import { BookComponent } from 'src/app/core/components/books/book/book.component';
 import { ActivateViewMode } from 'src/app/core/store/user.actions';
@@ -32,6 +32,8 @@ export class ListComponent implements OnInit, OnChanges {
   table!: MatTable<BookEntity>;
   @ViewChild(MatSort)
   sort!: MatSort;
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
 
   onSelect(row: { id: number }): void {
     this.selection.select(row);
@@ -69,6 +71,7 @@ export class ListComponent implements OnInit, OnChanges {
     if (changes['entities'] && changes['entities'].currentValue) {
       const entities = changes['entities'].currentValue;
       this.dataSource = new MatTableDataSource(entities);
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
   }
@@ -76,6 +79,10 @@ export class ListComponent implements OnInit, OnChanges {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   /** Announce the change in sort state for assistive technology. */

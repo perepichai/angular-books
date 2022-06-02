@@ -1,16 +1,7 @@
 <div fxLayout='row' fxLayoutAlign='start space-between'>
-	<button mat-raised-button class="btn button" [routerLink]="'book/create'" routerLinkActive="active">
+	<!-- <button mat-raised-button class="btn button" [routerLink]="'book/create'" routerLinkActive="active">
 		Add
-	</button>
-	<button mat-raised-button (click)="onView()" class="btn button" [routerLink]="['book', ownerId]" [disabled]="isDisabled">
-		Open
-	</button>
-	<button mat-raised-button (click)="onEdit()" class="btn button" [routerLink]="['book/edit', ownerId]" [disabled]="isDisabled">
-		Edit
-	</button>
-	<button mat-raised-button (click)="onRemove()" class="btn button" [disabled]="isDisabled">
-		Delete
-	</button>
+	</button> -->
 </div>
 <router-outlet></router-outlet>
 <app-list (selectedRowId)='onSelect($event)' [entities]="books" [columns]="columns"></app-list>

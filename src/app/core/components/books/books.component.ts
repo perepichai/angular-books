@@ -17,11 +17,10 @@ export class BooksComponent implements OnInit {
   books!: BookEntity[];
   @Select(UserState.book)
   owner$!: Observable<BookEntity>;
-  ownerId!: number;
+  bookId!: number;
   isDisabled: boolean = true;
   destroy$: Subject<boolean> = new Subject<boolean>();
   columns!: TableColumns[];
-  test!: BookEntity[];
 
   constructor(private store: Store) { }
 
@@ -34,18 +33,18 @@ export class BooksComponent implements OnInit {
     this.columns = Object.values(TableColumns);
   }
 
-  onEdit(): void {
-    this.store.dispatch(new ActivateEditMode(true))
-  }
-  onView(): void {
-    this.store.dispatch(new ActivateViewMode(true))
-  }
-  onRemove(): void {
-    this.store.dispatch(new DeleteBook(this.ownerId));
-  }
+  // onEdit(): void {
+  //   this.store.dispatch(new ActivateEditMode(true))
+  // }
+  // onView(): void {
+  //   this.store.dispatch(new ActivateViewMode(true))
+  // }
+  // onRemove(): void {
+  //   this.store.dispatch(new DeleteBook(this.bookId));
+  // }
   onSelect(id: number): void {
     this.isDisabled = false;
-    this.ownerId = id;
+    this.bookId = id;
   }
 
 }

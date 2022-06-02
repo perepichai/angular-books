@@ -1,9 +1,23 @@
+.table-container {
+    min-height: 90%;
+    max-height: 90%;
+    overflow: auto;
+}
+
 table {
-    width: 100%
+    width: 100%;
+    table-layout: fixed;
 }
 .mat-cell {
     padding: 8px;
   }
 .row-is-clicked {
     background-color: rgb(224, 228, 233);
+}
+
+.description {
+    width: calc(40%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
