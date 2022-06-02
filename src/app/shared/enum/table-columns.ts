@@ -1,8 +1,9 @@
-export enum TableOwnerColumns {
+export enum TableColumns {
     description = 'description',
     title = 'title',
     publishDate = 'publishDate',
-    pageCount = 'pageCount'
+    pageCount = 'pageCount',
+    actions = 'actions'
 }
 
 export enum TableColumnsTranslate {

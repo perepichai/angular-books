@@ -1,6 +1,9 @@
 table {
     width: 100%
 }
+.mat-cell {
+    padding: 8px;
+  }
 .row-is-clicked {
-    font-weight: bold;
+    background-color: rgb(224, 228, 233);
 }

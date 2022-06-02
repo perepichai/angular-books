@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
@@ -9,6 +9,7 @@ import { Constants } from 'src/app/shared/constants/constants';
 import { TableCarColumns } from 'src/app/shared/enum/table-columns';
 import { CarEntity } from 'src/app/shared/models/car-entity.model';
 import { BookEntity } from 'src/app/shared/models/book.model';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-book',
@@ -27,12 +28,16 @@ export class BookComponent implements OnInit, OnDestroy {
   book!: BookEntity;
   car!: CarEntity;
   cars!: FormArray;
-  ownerId!: number;
+  bookId!: number;
 
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      type: string,
+      property: string
+    }
   ) {
     this.FormGroup = this.fb.group({
       id: new FormControl(),
@@ -51,8 +56,8 @@ export class BookComponent implements OnInit, OnDestroy {
 
     if (this.isEditMode || this.isViewMode) {
       this.route.params.pipe(takeUntil(this.destroy$)).subscribe((params) => {
-        this.ownerId = Number(params['id']);
-        this.store.dispatch(new GetBookById(this.ownerId));
+        this.bookId = Number(this.data.property);
+        this.store.dispatch(new GetBookById(this.bookId));
       });
 
       this.book$

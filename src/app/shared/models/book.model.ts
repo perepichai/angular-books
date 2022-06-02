@@ -1,8 +1,8 @@
 
 export class BookEntity {
     id?: number | null;
-    description: string;
     title: string;
+    description: string;
     pageCount: number;
     excerpt?: string;
     publishDate: string;

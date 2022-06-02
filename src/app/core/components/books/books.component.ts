@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { TableOwnerColumns } from 'src/app/shared/enum/table-columns';
+import { TableColumns } from 'src/app/shared/enum/table-columns';
 import { BookEntity } from 'src/app/shared/models/book.model';
 import { ActivateEditMode, ActivateViewMode, DeleteBook, GetBookById, GetBooks } from '../../store/user.actions';
 import { UserState } from '../../store/user.state';
@@ -20,7 +20,7 @@ export class BooksComponent implements OnInit {
   ownerId!: number;
   isDisabled: boolean = true;
   destroy$: Subject<boolean> = new Subject<boolean>();
-  columns!: TableOwnerColumns[];
+  columns!: TableColumns[];
   test!: BookEntity[];
 
   constructor(private store: Store) { }
@@ -31,7 +31,7 @@ export class BooksComponent implements OnInit {
     ).subscribe((books: BookEntity[]) => {
       this.books = books});
     this.store.dispatch(new GetBooks());
-    this.columns = Object.values(TableOwnerColumns);
+    this.columns = Object.values(TableColumns);
   }
 
   onEdit(): void {

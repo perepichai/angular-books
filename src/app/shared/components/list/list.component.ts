@@ -5,6 +5,11 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { TableCarColumns, TableColumnsReverse } from 'src/app/shared/enum/table-columns';
 import { BookEntity } from 'src/app/shared/models/book.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalWindowComponent } from '../modal-window/modal-window.component';
+import { Store } from '@ngxs/store';
+import { BookComponent } from 'src/app/core/components/books/book/book.component';
+import { ActivateViewMode } from 'src/app/core/store/user.actions';
 
 @Component({
   selector: 'app-list',
@@ -32,12 +37,32 @@ export class ListComponent implements OnInit, OnChanges {
     this.selection.select(row);
     this.selectedRowId.emit(row.id);
   }
+  onOpen(book: BookEntity): void {
+    this.store.dispatch(new ActivateViewMode(true))
+    const dialogRef = this.matDialog.open(BookComponent, {
+      width: '1024px',
+      data: {
+        type: 'id',
+        property: book.id
+      }
+    });
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      this.store.dispatch(new ActivateViewMode(false))
+    });
+  }
+
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    private matDialog: MatDialog,
+    private store: Store) {}
 
   ngOnInit(): void {
-    this.displayedColumns = this.columns;
-    this.columnsToDisplay = this.displayedColumns.slice();
+    this.displayedColumns = this.columns.slice();
+    // this.columnsToDisplay = this.displayedColumns.slice();
+    this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
+      return data.title == filter;
+     };
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -46,6 +71,11 @@ export class ListComponent implements OnInit, OnChanges {
       this.dataSource = new MatTableDataSource(entities);
       this.dataSource.sort = this.sort;
     }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   /** Announce the change in sort state for assistive technology. */

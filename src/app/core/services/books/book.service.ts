@@ -47,7 +47,7 @@ export class BookService implements IBooksService {
     );
   }
   deleteBook(id: number): Observable<BookEntity[]> {
-    return this.http.delete<BookEntity[]>(`${this.url}${id}`).pipe(
+    return this.http.delete<BookEntity[]>(`${this.url}/${id}`).pipe(
       retry(2),
       catchError((error: HttpErrorResponse) => {
         return throwError(() => error);
