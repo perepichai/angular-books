@@ -1,4 +1,3 @@
-import { CarEntity } from "src/app/shared/models/car-entity.model";
 import { BookEntity } from "src/app/shared/models/book.model";
 
 export class GetBooks {

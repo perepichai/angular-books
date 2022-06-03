@@ -1,13 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { filter, Observable, Subject, takeUntil } from 'rxjs';
 import { ActivateEditMode, ActivateViewMode, CreateBook, EditBook, GetBookById } from 'src/app/core/store/user.actions';
 import { UserState } from 'src/app/core/store/user.state';
-import { Constants } from 'src/app/shared/constants/constants';
-import { TableCarColumns } from 'src/app/shared/enum/table-columns';
-import { CarEntity } from 'src/app/shared/models/car-entity.model';
 import { BookEntity } from 'src/app/shared/models/book.model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -21,9 +18,7 @@ export class BookComponent implements OnInit, OnDestroy {
   book$!: Observable<BookEntity>;
   isEditMode = false;
   isViewMode = false;
-  columns: string[] = [];
   FormGroup: FormGroup;
-  CarsFormGroup!: FormGroup;
   destroy$: Subject<boolean> = new Subject<boolean>();
   book: BookEntity = new BookEntity('','',0,'');
   bookId!: number;
@@ -63,8 +58,6 @@ export class BookComponent implements OnInit, OnDestroy {
           this.setBook(book);
         });
     }
-
-    this.columns = Object.values(TableCarColumns);
 
     this.FormGroup.valueChanges
     .pipe(takeUntil(this.destroy$))
