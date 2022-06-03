@@ -1,7 +1,7 @@
-<div fxLayout='row' fxLayoutAlign='start space-between'>
-	<button mat-fab color="primary" aria-label="Add book" class="fixed" (click)="onAdd()">
+<router-outlet></router-outlet>
+<app-list (selectedRowId)='onSelect($event)' [entities]="books" [columns]="columns"></app-list>
+<div fxLayoutAlign='end center' fxLayoutGap='2rem'>
+	<button mat-fab color="primary" aria-label="Add book" class="add-btn" (click)="onAdd()">
 		<mat-icon>add</mat-icon>
 	</button>
 </div>
-<router-outlet></router-outlet>
-<app-list (selectedRowId)='onSelect($event)' [entities]="books" [columns]="columns"></app-list>

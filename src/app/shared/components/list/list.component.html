@@ -1,15 +1,21 @@
 <div class="table-container">
-  <mat-form-field appearance="standard">
-    <mat-label>Search</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. book 1" #input>
-  </mat-form-field>
-
+  <div fxLayout='row' fxLayoutAlign="start" fxLayoutGap="2rem">
+    <button mat-raised-button color="primary" aria-label="Add book" class="button btn-export" (click)="exporter.exportTable('xlsx')">Export
+      <mat-icon>download</mat-icon>
+    </button>
+    <mat-form-field appearance="standard">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. book 1" #input>
+    </mat-form-field>
+  </div>
   <table
-    mat-table
+    mat-table    
     [dataSource]="dataSource"
     matSort
     (matSortChange)="announceSortChange($event)"
     class="mat-elevation-z8"
+    matTableExporter
+    #exporter="matTableExporter"
   >
     <!-- Title Column -->
     <ng-container matColumnDef="title" sticky>
@@ -81,5 +87,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns" sticky></tr>
     <tr mat-row (click)="onSelect(row)" [class.row-is-clicked]="selection.isSelected(row)" *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10]" aria-label="Select page of books"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]" aria-label="Select page of books"></mat-paginator>
 </div>

@@ -23,6 +23,7 @@
     "@angular/router": "~13.1.0",
     "@ngxs/store": "^3.7.3",
     "angular-in-memory-web-api": "^0.13.0",
+    "mat-table-exporter": "^10.2.4",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

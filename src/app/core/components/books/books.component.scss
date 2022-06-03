@@ -1,5 +1,9 @@
 @import "src/app/shared/styles/buttons.scss";
 
+.add-btn {
+    position: fixed;
+    top: 16px;
+}
 .button {
     margin: 6px;
 }

@@ -15,8 +15,12 @@ table {
 }
 
 .description {
-    width: calc(40%);
+    width: calc(38%);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.btn-export {
+    margin-right: 1rem;
 }
