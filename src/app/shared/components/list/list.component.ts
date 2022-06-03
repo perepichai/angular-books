@@ -3,7 +3,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {  Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { TableCarColumns, TableColumnsReverse } from 'src/app/shared/enum/table-columns';
+import { TableCarColumns } from 'src/app/shared/enum/table-columns';
 import { BookEntity } from 'src/app/shared/models/book.model';
 import { MatDialog } from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
@@ -22,9 +22,7 @@ export class ListComponent implements OnInit, OnChanges {
   @Output() selectedRowId = new EventEmitter<number>();
 
   displayedColumns: string[] = [];
-  columnsToDisplay: string[] = [];
   dataSource = new MatTableDataSource([{}]);
-  tableColumnsReverse = TableColumnsReverse;
   tableColumns = TableCarColumns;
   selection = new SelectionModel<any>(false, []);
 
@@ -80,7 +78,6 @@ export class ListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.displayedColumns = this.columns.slice();
-    // this.columnsToDisplay = this.displayedColumns.slice();
     this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
       return data.title == filter;
      };
