@@ -2,7 +2,10 @@
 @import "src/app/shared/styles/buttons.scss";
 
 
-.card-border {
+.wrapper, .full-width {
+    width: 100%;
+}
+.card-border, .block {
     margin: 32px 6px;
 }
 .btn-section {
@@ -12,7 +15,7 @@
     margin: 16px 0;
 }
 form .inputs {
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 }
 .info-message {
     font-size: 0.75em;

@@ -67,9 +67,14 @@
         *matHeaderCellDef
       ></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-raised-button class="btn button" (click)="onOpen(element)">
-          Open
-        </button>
+        <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="1rem">
+          <button mat-raised-button color="warn" class="btn button" (click)="onOpen(element)">
+            Open
+          </button>
+          <button color="primary" mat-icon-button aria-label="Edit" (click)="onEdit(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
       </td>
     </ng-container>
 

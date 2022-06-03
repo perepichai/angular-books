@@ -25,9 +25,7 @@ export class BookComponent implements OnInit, OnDestroy {
   FormGroup: FormGroup;
   CarsFormGroup!: FormGroup;
   destroy$: Subject<boolean> = new Subject<boolean>();
-  book!: BookEntity;
-  car!: CarEntity;
-  cars!: FormArray;
+  book: BookEntity = new BookEntity('','',0,'');
   bookId!: number;
 
   constructor(
@@ -35,19 +33,18 @@ export class BookComponent implements OnInit, OnDestroy {
     private store: Store,
     private route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: {
-      type: string,
+      state: string,
       property: string
     }
   ) {
     this.FormGroup = this.fb.group({
-      id: new FormControl(),
+      id: new FormControl(0),
       title: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
-      pageCount: new FormControl('', [Validators.required]),
+      excerpt: new FormControl(''),
+      pageCount: new FormControl(0, [Validators.required]),
       publishDate: new FormControl('', [Validators.required]),
-      // cars: this.fb.array([]),
     });
-    // this.cars = this.FormGroup.get('cars') as FormArray;
   }
 
   ngOnInit(): void {
@@ -55,68 +52,33 @@ export class BookComponent implements OnInit, OnDestroy {
     this.isViewMode = this.store.selectSnapshot<boolean>(UserState.isViewMode);
 
     if (this.isEditMode || this.isViewMode) {
-      this.route.params.pipe(takeUntil(this.destroy$)).subscribe((params) => {
-        this.bookId = Number(this.data.property);
-        this.store.dispatch(new GetBookById(this.bookId));
-      });
+      this.bookId = Number(this.data.property);
+      this.store.dispatch(new GetBookById(this.bookId));
 
       this.book$
         .pipe(
           filter((book: BookEntity) => !!book),
           takeUntil(this.destroy$))
         .subscribe((book: BookEntity) => {
-          this.setUser(book);
+          this.setBook(book);
         });
-
     }
 
     this.columns = Object.values(TableCarColumns);
 
     this.FormGroup.valueChanges
     .pipe(takeUntil(this.destroy$))
-    .subscribe((val: BookEntity) => {
-      this.book = val;
-    });
-
+    .subscribe((val: BookEntity) => this.book = val);
   }
 
-  private setUser(user: BookEntity): void {
-    // this.cars.clear();
+  private setBook(book: BookEntity): void {
     this.FormGroup.reset();
-    this.FormGroup.patchValue(user);
-    // user.cars.forEach((car: CarEntity) => {
-    //   let carForm = this.newForm();
-    //   carForm.patchValue(car);
-    //   this.cars.push(carForm);
-    // });
+    this.FormGroup.patchValue(book);
 
     if (this.isViewMode) {
       this.FormGroup.disable();
-      // this.cars.disable();
     }
 
-  }
-
-  private newForm(): FormGroup {
-    const CarsFormGroup = this.fb.group({
-      id: new FormControl(),
-      number: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(Constants.MAX_LENGTH),
-        Validators.pattern(Constants.NUMBER_REGEX),
-      ]),
-      model: new FormControl('', [Validators.required]),
-      manufacturer: new FormControl('', [Validators.required]),
-      productionYear: new FormControl('', [Validators.required]),
-    });
-    return CarsFormGroup;
-  }
-
-  onAdd(): void {
-    this.cars.push(this.newForm());
-  }
-  onRemove(i: number): void {
-    this.cars.removeAt(i);
   }
 
   onSave(): void {
@@ -132,7 +94,6 @@ export class BookComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ActivateViewMode(false));
     this.store.dispatch(new ActivateEditMode(false));
     this.FormGroup.reset();
-    // this.cars.reset();
   }
 
   ngOnDestroy(): void {

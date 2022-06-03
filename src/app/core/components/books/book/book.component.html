@@ -7,58 +7,70 @@
 
 <ng-template #view>
     <h1>{{ book?.title }}</h1>
-    <div fxLayout='row' fxLayoutAlign="start" fxLayoutGap="1rem"><p>Publish date: {{ book?.publishDate | date }}</p> <p>Pages: {{ book?.pageCount }}</p></div>
+    <div fxLayout='row' fxLayoutAlign="start" fxLayoutGap="2rem"><p>Publish date: {{ book?.publishDate | date }}</p> <p>Pages: {{ book?.pageCount }}</p></div>
     <div fxLayout='column'>
-        <h3>Description:</h3>
-        <p>{{ book?.description }}</p>
+        <div class="block">
+            <h3>Description:</h3>
+            <p>{{ book?.description }}</p>
+        </div>
         <ng-container *ngIf="book?.excerpt">
-            <h3>Excerpt:</h3>
-            <p>{{ book.excerpt }}</p>
+            <div class="block">
+                <h3>Excerpt:</h3>
+                <p>{{ book.excerpt }}</p>
+            </div>
         </ng-container>
     </div>
-
-    <!-- <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
-        <button mat-raised-button class="cancel button" [routerLink]="''" routerLinkActive="active" (click)="onBack()">
-            Back
+    <mat-divider></mat-divider>
+    <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
+        <button mat-raised-button mat-dialog-close class="dialog-action-button button">
+            Close
         </button>
-    </div> -->
+    </div>
 </ng-template>
 
 <ng-template #edit>
     <div class="card-border">
-        <form [formGroup]="FormGroup" fxLayout='column' fxLayoutAlign='start space-between' class="step">
-            <div fxLayout='row' class="inputs">
-                <div><label class="step-label"> Title <span class="step-required">*</span></label>
-                    <mat-form-field>
+        <form [formGroup]="FormGroup" fxLayout='column' fxLayoutAlign='start' layout-fill class="step">
+            <div fxLayoutGap="2rem" class="inputs">                
+                    <mat-form-field fxFlex appearance="fill">
+                        <label class="step-label"> Title <span class="step-required">*</span></label>
                         <input matInput class="step-input" type="text" formControlName="title">
-                    </mat-form-field>
-                </div>
-                <div><label class="step-label"> Description <span class="step-required">*</span></label>
+                    </mat-form-field>                                
+            </div>
+            <div fxLayout='row' fxLayoutGap="2rem" class="inputs">                
                     <mat-form-field>
-                        <input matInput class="step-input" type="textarea" formControlName="description">
-                    </mat-form-field>
-                </div>
-                <div><label class="step-label"> Page Count <span class="step-required">*</span></label>
-                    <mat-form-field>
-                        <input matInput class="step-input" type="text" formControlName="pageCount">
-                    </mat-form-field>
-                </div>
-                <div><label class="step-label"> Publish Date <span class="step-required">*</span></label>
-                    <mat-form-field>
-                        <input matInput class="step-input" type="text" formControlName="publishDate">
-                    </mat-form-field>
-                </div>
+                        <label class="step-label"> Page Count <span class="step-required">*</span></label>
+                        <input matInput class="step-input" type="number" formControlName="pageCount">
+                    </mat-form-field>                
+                    <mat-form-field class="step-input step-input-date" floatLabel="never">
+                        <label class="step-label"> Publish Date <span class="step-required">*</span></label>
+                        <input matInput [matDatepicker]="picker" formControlName="publishDate" >
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>                
+            </div>
+            <div fxFlex>                
+                    <mat-form-field class="full-width" appearance="fill">
+                        <label class="step-label"> Description <span class="step-required">*</span></label>
+                        <textarea matInput class="step-input" formControlName="description" cdkTextareaAutosize cdkAutosizeMaxRows="8"></textarea>
+                    </mat-form-field>                
+            </div>
+            <div fxFlex >                
+                    <mat-form-field class="full-width" appearance="fill">
+                        <label class="step-label"> Excerpt </label>
+                        <textarea matInput class="step-input" formControlName="excerpt" cdkTextareaAutosize cdkAutosizeMaxRows="8"></textarea>
+                    </mat-form-field>                
             </div>
         </form>
     </div>
     <mat-divider></mat-divider>
     <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
-        <button mat-raised-button class="btn button" [routerLink]="''" routerLinkActive="active"
+        <button mat-raised-button  mat-dialog-close class="btn button" [routerLink]="''" routerLinkActive="active"
             [disabled]="!(FormGroup.valid)" (click)="onSave()">
             Save
         </button>
-        <button mat-raised-button class="cancel button" [routerLink]="''" routerLinkActive="active" (click)="onBack()">
-            Back
+        <button mat-raised-button mat-dialog-close class="dialog-action-button button" (click)="onBack()">
+            Cancel
         </button>
     </div>
 </ng-template>

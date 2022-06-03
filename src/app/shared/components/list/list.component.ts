@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import { Store } from '@ngxs/store';
 import { BookComponent } from 'src/app/core/components/books/book/book.component';
-import { ActivateViewMode } from 'src/app/core/store/user.actions';
+import { ActivateEditMode, ActivateViewMode } from 'src/app/core/store/user.actions';
 
 @Component({
   selector: 'app-list',
@@ -43,6 +43,8 @@ export class ListComponent implements OnInit, OnChanges {
     this.store.dispatch(new ActivateViewMode(true))
     const dialogRef = this.matDialog.open(BookComponent, {
       width: '1024px',
+      height: '95vh',
+      autoFocus: false,
       data: {
         type: 'id',
         property: book.id
@@ -51,6 +53,23 @@ export class ListComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       this.store.dispatch(new ActivateViewMode(false))
+    });
+  }
+
+  onEdit(book: BookEntity): void {
+    this.store.dispatch(new ActivateEditMode(true))
+    const dialogRef = this.matDialog.open(BookComponent, {
+      width: '1024px',
+      height: '95vh',
+      autoFocus: false,
+      data: {
+        type: 'id',
+        property: book.id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      this.store.dispatch(new ActivateEditMode(false))
     });
   }
 
